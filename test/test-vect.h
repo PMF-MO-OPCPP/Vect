@@ -15,4 +15,14 @@ public:
      T * get_mend (Vect<T> const & vec) { return vec.mend;        }
 };
 
+
+class VectTestPair  : public ::testing::Test {
+public:
+     //Vect<T> vec;
+     std::pair<int,char> * get_mdata(Vect<std::pair<int,char>> const & vec) { return vec.mdata;       }
+     std::pair<int,char> * get_mff  (Vect<std::pair<int,char>> const & vec) { return vec.mfirst_free; }
+     std::pair<int,char> * get_mend (Vect<std::pair<int,char>> const & vec) { return vec.mend;        }
+};
+
+
 #endif

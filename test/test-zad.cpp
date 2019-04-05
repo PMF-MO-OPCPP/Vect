@@ -29,6 +29,29 @@ TYPED_TEST(VectTest, construction) {
     ASSERT_EQ(v1[n-1], 3);
 }
 
+
+TEST_F(VectTestPair, pair_construction) {
+    Vect<std::pair<int,char> > vec;
+    ASSERT_EQ(vec.size(), 0u);
+    ASSERT_EQ(vec.capacity(), 0u);
+    ASSERT_EQ(this->get_mdata(vec), nullptr);
+    ASSERT_EQ(this->get_mff(vec), nullptr);
+    ASSERT_EQ(this->get_mend(vec), nullptr);
+
+    Vect<std::pair<int,char> > v(10);
+    ASSERT_EQ(v.size(), 10u);
+    ASSERT_EQ(v[9].first, 0);
+
+    size_t n = 100000;
+ //   TypeParam p0;
+ //   if constexpr std::is
+    Vect<std::pair<int,char> > v1(n, std::make_pair(3,'a'));
+    ASSERT_EQ(v1.size(), n);
+    ASSERT_EQ(v1[n-1].second, 'a');
+}
+
+
+
 TYPED_TEST(VectTest, indexing) {
     size_t n = 10;
     Vect<TypeParam> v1(n, 3);
@@ -38,6 +61,14 @@ TYPED_TEST(VectTest, indexing) {
     ASSERT_EQ(v2[n-1], 4);
 }
 
+TEST_F(VectTestPair, indexing) {
+    size_t n = 10;
+    Vect<std::pair<int,char> > v1(n, std::make_pair(3,'a'));
+    const Vect<std::pair<int,char> > v2(n, std::make_pair(4,'a'));
+
+    ASSERT_EQ(v1[n-1].first, 3);
+    ASSERT_EQ(v2[n-1].second, 'a');
+}
 
 TYPED_TEST(VectTest, copyconst) {
     size_t n = 10;
@@ -84,8 +115,8 @@ TYPED_TEST(VectTest, moveop) {
 
     ASSERT_EQ(v1.size(), 0u);
     ASSERT_EQ(this->get_mdata(v1), nullptr);
-    ASSERT_EQ(this->get_mff(v1), nullptr);
-    ASSERT_EQ(this->get_mend(v1), nullptr);
+    ASSERT_EQ(this->get_mff(v1),   nullptr);
+    ASSERT_EQ(this->get_mend(v1),  nullptr);
     ASSERT_EQ(this->get_mdata(v2), data);
 }
 
@@ -100,6 +131,7 @@ TYPED_TEST(VectTest, selfassign) {
 
 TYPED_TEST(VectTest, push_back) {
     Vect<TypeParam> vec;
+    ASSERT_EQ(this->get_mdata(vec), nullptr);
 
     vec.push_back(1);
     ASSERT_EQ(vec.size(), 1u);
@@ -122,6 +154,12 @@ TYPED_TEST(VectTest, push_back) {
     ASSERT_EQ(vec.size(), 4u);
     ASSERT_EQ(vec.capacity(), 4u);
     ASSERT_EQ(this->get_mdata(vec), data);
+    data = this->get_mdata(vec);
+
+    vec.push_back(5);
+    ASSERT_EQ(vec.size(), 5u);
+    ASSERT_EQ(vec.capacity(), 8u);
+    ASSERT_NE(this->get_mdata(vec), data);
 
 }
 

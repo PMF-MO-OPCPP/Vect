@@ -11,6 +11,7 @@ template <typename T>
 class Vect
 {
     friend class VectTest<T>;  // da testovi mogu dohvatiti privatne varijable
+    friend class VectTestPair;
 public:
     explicit Vect(size_t n = 0, T v= {});  // Ctor
     // Kontrola kopiranja dolazi ovdje
